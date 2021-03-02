@@ -1,82 +1,135 @@
 package BreadthFirstSearchAlgorithm;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Timeout;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import static org.junit.Assert.assertEquals;
 
 public class BreadthFirstSearchTest {
-    private int numVertices;
-    private ArrayList<Boolean> visitedList = new ArrayList<>();
-    private LinkedList<LinkedList<Integer>> adjacent = new LinkedList<>();
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(2000);
 
-    public BreadthFirstSearchTree(int numVertices) {
-        this.numVertices = numVertices;
+    @Test
+    public void testCreationOfTree() {
+        BreadthFirstSearchTree testTree = new BreadthFirstSearchTree(6);
+        testTree.addEdge(0, 1);
+        testTree.addEdge(0, 2);
+        testTree.addEdge(1, 3);
+        testTree.addEdge(1, 4);
+        testTree.addEdge(2, 4);
+        testTree.addEdge(3, 4);
+        testTree.addEdge(3, 5);
+        testTree.addEdge(4, 5);
 
-        for (int i = 0; i < numVertices; i++) {
-            visitedList.add(false);
-        }
+        int actualNumVertices = testTree.getNumVertices();
+        int expectedNumVertices = 6;
+        assertEquals("Incorrect number of vertices.", expectedNumVertices, actualNumVertices);
 
-        for (int i = 0; i < numVertices; i++) {
-            adjacent.add(new LinkedList<>());
-        }
+        ArrayList<Integer> actualVertices = testTree.getVertices();
+        ArrayList<Integer> expectedVertices = new ArrayList<>();
+        expectedVertices.add(0);
+        expectedVertices.add(1);
+        expectedVertices.add(2);
+        expectedVertices.add(3);
+        expectedVertices.add(4);
+        expectedVertices.add(5);
+        assertEquals("Incorrect array of vertices returned.", expectedVertices, actualVertices);
     }
 
-    public void addEdge(int vertex1, int vertex2) {
-        adjacent.get(vertex1).add(vertex2);
+    @Test
+    public void testSimpleTreeBFS() {
+        BreadthFirstSearchTree testTree = new BreadthFirstSearchTree(3);
+        testTree.addEdge(0, 1);
+        testTree.addEdge(0, 2);
+
+        ArrayList<Integer> actual1 = testTree.BFS(1);
+        ArrayList<Integer> expected1 = new ArrayList<>();
+        expected1.add(1);
+        assertEquals("Incorrect result from Breadth-First Search.", expected1, actual1);
+
+        ArrayList<Integer> actual2 = testTree.BFS(0);
+        ArrayList<Integer> expected2 = new ArrayList<>();
+        expected2.add(0);
+        expected2.add(1);
+        expected2.add(2);
+        assertEquals("Incorrect result from Breadth-First Search.", expected2, actual2);
     }
 
-    public int getNumVertices() {
-        return numVertices;
+    @Test
+    public void testIntermediateTreeBFS() {
+        BreadthFirstSearchTree testTree = new BreadthFirstSearchTree(4);
+        testTree.addEdge(0, 1);
+        testTree.addEdge(0, 2);
+        testTree.addEdge(1, 3);
+
+        ArrayList<Integer> actual1 = testTree.BFS(1);
+        ArrayList<Integer> expected1 = new ArrayList<>();
+        expected1.add(1);
+        expected1.add(3);
+        assertEquals("Incorrect result from Breadth-First Search", expected1, actual1);
+
+        ArrayList<Integer> actual2 = testTree.BFS(0);
+        ArrayList<Integer> expected2 = new ArrayList<>();
+        expected2.add(0);
+        expected2.add(1);
+        expected2.add(2);
+        expected2.add(3);
+        assertEquals("Incorrect result from Breadth-First Search.", expected2, actual2);
     }
 
-    public ArrayList<Integer> getVertices() {
-        ArrayList<Integer> vertices = new ArrayList<>();
-        if (numVertices == 0)
-            return vertices;
-        for (int i = 0; i < numVertices; i++) {
-            vertices.add(i);
-        }
-        return vertices;
+    @Test
+    public void testAdvancedTreeBFS() {
+        BreadthFirstSearchTree testTree = new BreadthFirstSearchTree(6);
+        testTree.addEdge(0, 1);
+        testTree.addEdge(0, 2);
+        testTree.addEdge(1, 3);
+        testTree.addEdge(1, 4);
+        testTree.addEdge(2, 4);
+        testTree.addEdge(3, 4);
+        testTree.addEdge(3, 5);
+        testTree.addEdge(4, 5);
+
+        ArrayList<Integer> actual1 = testTree.BFS(1);
+        ArrayList<Integer> expected1 = new ArrayList<>();
+        expected1.add(1);
+        expected1.add(3);
+        expected1.add(4);
+        expected1.add(5);
+        assertEquals("Incorrect result from Breadth-First Search", expected1, actual1);
+
+        ArrayList<Integer> actual2 = testTree.BFS(0);
+        ArrayList<Integer> expected2 = new ArrayList<>();
+        expected2.add(0);
+        expected2.add(1);
+        expected2.add(2);
+        expected2.add(3);
+        expected2.add(4);
+        expected2.add(5);
+        assertEquals("Incorrect result from Breadth-First Search.", expected2, actual2);
     }
 
-    public boolean isVisited(int vertex) {
-        if (visitedList.get(vertex))
-            return true;
-        return false;
-    }
+    @Test
+    public void testJumbledTree() {
+        BreadthFirstSearchTree testTree = new BreadthFirstSearchTree(4);
+        testTree.addEdge(0, 1);
+        testTree.addEdge(0, 2);
+        testTree.addEdge(1, 2);
+        testTree.addEdge(2, 0);
+        testTree.addEdge(2, 3);
+        testTree.addEdge(3, 3);
 
-    public void changeVisitation(int vertex) {
-        if (!isVisited(vertex))
-            visitedList.set(vertex, true);
-    }
+        ArrayList<Integer> actual1 = testTree.BFS(2);
+        ArrayList<Integer> expected1 = new ArrayList<>();
+        expected1.add(2);
+        expected1.add(0);
+        expected1.add(3);
+        expected1.add(1);
+        assertEquals("Incorrect result from Breadth-First Search.", expected1, actual1);
 
-    public ArrayList<Integer> BFS(int startVertex) {
-        for (int i = 0; i < numVertices; i++) {
-            visitedList.set(i, false);
-        }
-
-        ArrayList<Integer> result = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(startVertex);
-        result.add(startVertex);
-        int i = startVertex;
-        changeVisitation(i);
-        while (queue.size() != 0) {
-            LinkedList<Integer> children = adjacent.get(i);
-            for (Integer child : children) {
-                if (!isVisited(child)) {
-                    changeVisitation(child);
-                    queue.add(child);
-                    result.add(child);
-                }
-            }
-            queue.poll();
-            if (!queue.isEmpty()) {
-                i = queue.element();
-            } else {
-                break;
-            }
-        }
-        return result;
+        ArrayList<Integer> actual2 = testTree.BFS(3);
+        ArrayList<Integer> expected2 = new ArrayList<>();
+        expected2.add(3);
+        assertEquals("Incorrect result from Breadth-First Search.", expected2, actual2);
     }
 }
