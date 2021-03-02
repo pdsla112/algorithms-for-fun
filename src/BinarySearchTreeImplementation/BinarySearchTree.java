@@ -29,13 +29,29 @@ public class BinarySearchTree {
 //
 //    }
 //
-//    public int minValue() {
-//        return 0;
-//    }
-//
-//    public int maxValue() {
-//        return 0;
-//    }
+    public int getMin() {
+        Node minNode = root;
+        if (root.left == null) {
+            return minNode.key;
+        }
+
+        while (root.left != null) {
+            minNode = root.left;
+        }
+        return minNode.key;
+    }
+
+    public int getMax() {
+        Node maxNode = root;
+        if (root.right == null) {
+            return maxNode.key;
+        }
+
+        while (root.right != null) {
+            maxNode = root.right;
+        }
+        return maxNode.key;
+    }
 
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
