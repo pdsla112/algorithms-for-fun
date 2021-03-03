@@ -14,13 +14,32 @@ public class BinarySearchTree {
     public Node addRecursively(int key, Node root) {
         if (root == null) {
             root = new Node(key);
+//            System.out.println(root.key + " with the left branch being: " + root.left + ", and the right branch being: " + root.right);
             return root;
         }
 
         if (key < root.key) {
             root.left = addRecursively(key, root.left);
+            if (root.left != null && root.right == null) {
+                System.out.println(root.key + " with the left branch being: " + root.left.key + ", and the right branch being: " + null);
+            } else if (root.left == null && root.right != null) {
+                System.out.println(root.key + " with the left branch being: " + null + ", and the right branch being: " + root.right.key);
+            } else if (root.left != null && root.right != null) {
+                System.out.println(root.key + " with the left branch being: " + root.left.key + ", and the right branch being: " + root.right.key);
+            } else {
+                System.out.println(root.key + " with the left branch being: " + null + ", and the right branch being: " + null);
+            }
         } else if (key > root.key) {
             root.right = addRecursively(key, root.right);
+            if (root.left != null && root.right == null) {
+                System.out.println(root.key + " with the left branch being: " + root.left.key + ", and the right branch being: " + null);
+            } else if (root.left == null && root.right != null) {
+                System.out.println(root.key + " with the left branch being: " + null + ", and the right branch being: " + root.right.key);
+            } else if (root.left != null && root.right != null) {
+                System.out.println(root.key + " with the left branch being: " + root.left.key + ", and the right branch being: " + root.right.key);
+            } else {
+                System.out.println(root.key + " with the left branch being: " + null + ", and the right branch being: " + null);
+            }
         }
         return root;
     }
@@ -109,15 +128,14 @@ public class BinarySearchTree {
     }
 
     public int getMin() {
-        Node minNode = root;
         if (root.left == null) {
-            return minNode.key;
+            return root.key;
         }
 
         while (root.left != null) {
-            minNode = root.left;
+            root = root.left;
         }
-        return minNode.key;
+        return root.key;
     }
 
     public int getMax() {
