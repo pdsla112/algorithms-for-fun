@@ -1,5 +1,8 @@
 package BinarySearchTreeImplementation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
     Node root;
 
@@ -57,10 +60,14 @@ public class BinarySearchTree {
                 System.out.println("It reached the first if-statement of the delete() method.");
             }
         }
-        Node nodeToDelete = getNodeToDelete(key, root);
+        List<Node> nodes = getNodeToDelete(key, root, root);
+        Node nodeToDelete = nodes.get(0);
+        Node parentNode = nodes.get(1);
         System.out.println("This is the node to delete: " + nodeToDelete.key);
         if (nodeToDelete.right == null && nodeToDelete.left == null) {  //If the nodeToDelete is a leaf.
-            nodeToDelete = null;
+            parentNode.left = null;
+            parentNode.right = null;
+//            nodeToDelete = null;
 //            System.out.println("This is the key of the deleted node: " + nodeToDelete.key);
             return;
         } else if (nodeToDelete.right == null) {  //If the nodeToDelete has an empty right tree.
@@ -119,23 +126,26 @@ public class BinarySearchTree {
      * @param startingRoot
      * @return
      */
-    public Node getNodeToDelete(int deleteKey, Node startingRoot) {
+    public List<Node> getNodeToDelete(int deleteKey, Node startingRoot, Node parentNode) {
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(startingRoot);
+        nodes.add(parentNode);
         if (startingRoot == null) {
             return null;
         }
 
         if (startingRoot.key == deleteKey) {
             System.out.println("This is node that is FINALLY RETURNED " + startingRoot.key);
-            return startingRoot;
+            return nodes;
         }
 
         if (deleteKey < startingRoot.key) {
             System.out.println("This is node that is returned " + startingRoot.key);
-            return getNodeToDelete(deleteKey, startingRoot.left);
+            return getNodeToDelete(deleteKey, startingRoot.left, startingRoot);
         }
 
         System.out.println("This is node that is returned " + startingRoot.key);
-        return getNodeToDelete(deleteKey, startingRoot.right);
+        return getNodeToDelete(deleteKey, startingRoot.right, startingRoot);
 //        return startingRoot;
     }
 
