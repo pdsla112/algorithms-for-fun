@@ -41,6 +41,7 @@ public class BinarySearchTree {
                 System.out.println(root.key + " with the left branch being: " + null + ", and the right branch being: " + null);
             }
         }
+        System.out.println("This is the root: " + root.key);
         return root;
     }
 
@@ -56,7 +57,6 @@ public class BinarySearchTree {
                 System.out.println("It reached the first if-statement of the delete() method.");
             }
         }
-
         Node nodeToDelete = getNodeToDelete(key, root);
         System.out.println("This is the node to delete: " + nodeToDelete.key);
         if (nodeToDelete.right == null && nodeToDelete.left == null) {  //If the nodeToDelete is a leaf.
@@ -120,26 +120,23 @@ public class BinarySearchTree {
      * @return
      */
     public Node getNodeToDelete(int deleteKey, Node startingRoot) {
-        int i = 0;
+        if (startingRoot == null) {
+            return null;
+        }
+
         if (startingRoot.key == deleteKey) {
-//            System.out.println(root.key);
-            i++;
-            System.out.println("Step " + i + ". This is what is FINALLY returned from the getNodeToDelete() method: " + startingRoot.key);
+            System.out.println("This is node that is FINALLY RETURNED " + startingRoot.key);
             return startingRoot;
         }
 
         if (deleteKey < startingRoot.key) {
-            i++;
-            System.out.println("Step " + i + ". This is what is returned from the getNodeToDelete() method: " + startingRoot.key);
-            getNodeToDelete(deleteKey, startingRoot.left);
-        } else if (deleteKey > startingRoot.key) {
-            i++;
-            System.out.println("Step " + i + ". This is what is returned from the getNodeToDelete() method: " + startingRoot.key);
-            getNodeToDelete(deleteKey, startingRoot.right);
+            System.out.println("This is node that is returned " + startingRoot.key);
+            return getNodeToDelete(deleteKey, startingRoot.left);
         }
-        i++;
-        System.out.println("Step " + i + ". This is what is returned from the getNodeToDelete() method: " + startingRoot.key);
-        return startingRoot;
+
+        System.out.println("This is node that is returned " + startingRoot.key);
+        return getNodeToDelete(deleteKey, startingRoot.right);
+//        return startingRoot;
     }
 
     public int getMin() {
