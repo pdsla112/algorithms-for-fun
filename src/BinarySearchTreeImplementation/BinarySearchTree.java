@@ -72,9 +72,6 @@ public class BinarySearchTree {
             } else {
                 parentNode.right = null;
             }
-//            nodeToDelete = null;
-//            System.out.println("This is the key of the deleted node: " + nodeToDelete.key);
-            return;
         } else if (nodeToDelete.right == null) {  //If the nodeToDelete has an empty right tree.
             Node immediateLeftNode = nodeToDelete.left;
             nodeToDelete.key = immediateLeftNode.key;
