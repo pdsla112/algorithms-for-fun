@@ -60,13 +60,19 @@ public class BinarySearchTree {
                 System.out.println("It reached the first if-statement of the delete() method.");
             }
         }
-        List<Node> nodes = getNodeToDelete(key, root, root);
+        List<List> nodeData = getNodeToDelete(key, root, root, null);
+        List<Node> nodes = nodeData.get(0);
         Node nodeToDelete = nodes.get(0);
         Node parentNode = nodes.get(1);
+        List<String> directionData = nodeData.get(1);
+        String direction = directionData.get(0);
         System.out.println("This is the node to delete: " + nodeToDelete.key);
         if (nodeToDelete.right == null && nodeToDelete.left == null) {  //If the nodeToDelete is a leaf.
-            parentNode.left = null;
-            parentNode.right = null;
+            if (direction == "left") {
+                parentNode.left = null;
+            } else {
+                parentNode.right = null;
+            }
 //            nodeToDelete = null;
 //            System.out.println("This is the key of the deleted node: " + nodeToDelete.key);
             return;
@@ -126,26 +132,34 @@ public class BinarySearchTree {
      * @param startingRoot
      * @return
      */
-    public List<Node> getNodeToDelete(int deleteKey, Node startingRoot, Node parentNode) {
+    public List<List> getNodeToDelete(int deleteKey, Node startingRoot, Node parentNode, String directionFlag) {
         List<Node> nodes = new ArrayList<>();
         nodes.add(startingRoot);
         nodes.add(parentNode);
+
+        List<List> nodeData = new ArrayList<>();
+        nodeData.add(nodes);
+        List<String> direction = new ArrayList<>();
+        direction.add(directionFlag);
+
+        nodeData.add(direction);
+
         if (startingRoot == null) {
             return null;
         }
 
         if (startingRoot.key == deleteKey) {
             System.out.println("This is node that is FINALLY RETURNED " + startingRoot.key);
-            return nodes;
+            return nodeData;
         }
 
         if (deleteKey < startingRoot.key) {
             System.out.println("This is node that is returned " + startingRoot.key);
-            return getNodeToDelete(deleteKey, startingRoot.left, startingRoot);
+            return getNodeToDelete(deleteKey, startingRoot.left, startingRoot, "left");
         }
 
         System.out.println("This is node that is returned " + startingRoot.key);
-        return getNodeToDelete(deleteKey, startingRoot.right, startingRoot);
+        return getNodeToDelete(deleteKey, startingRoot.right, startingRoot, "right");
 //        return startingRoot;
     }
 
