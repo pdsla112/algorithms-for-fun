@@ -17,7 +17,6 @@ public class BinarySearchTree {
     public Node addRecursively(int key, Node root) {
         if (root == null) {
             root = new Node(key);
-//            System.out.println(root.key + " with the left branch being: " + root.left + ", and the right branch being: " + root.right);
             return root;
         }
 
@@ -115,15 +114,6 @@ public class BinarySearchTree {
         return nodeToDelete;
     }
 
-//    public int getMinImmediateRight(Node node) {
-//        Node immediateRightNode = node.right;
-//        if (immediateRightNode.left == null) {
-//            Node rightSubTree = immediateRightNode.right;
-//            node.key = immediateRightNode.key;
-//            node.right = rightSubTree;
-//            return node.key;
-//        }
-//    }
 
     /**
      * Assumption: the key does exist in the tree.
