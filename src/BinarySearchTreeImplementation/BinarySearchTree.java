@@ -160,7 +160,6 @@ public class BinarySearchTree {
 
         System.out.println("This is node that is returned " + startingRoot.key);
         return getNodeToDelete(deleteKey, startingRoot.right, startingRoot, "right");
-//        return startingRoot;
     }
 
     public int getMin() {
