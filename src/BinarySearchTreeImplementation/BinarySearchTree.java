@@ -2,6 +2,7 @@ package BinarySearchTreeImplementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 public class BinarySearchTree {
     Node root;
@@ -179,6 +180,15 @@ public class BinarySearchTree {
         return maxNode.key;
     }
 
+    public void inOrderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+        inOrderTraversal(node.left);
+        System.out.println(node.key);
+        inOrderTraversal(node.right);
+    }
+
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
         bst.add(7);
@@ -190,6 +200,8 @@ public class BinarySearchTree {
         bst.add(1);
         bst.add(-7);
         bst.add(77);
+        bst.add(-12);
         System.out.println(bst);
+        bst.inOrderTraversal(bst.root);
     }
 }
