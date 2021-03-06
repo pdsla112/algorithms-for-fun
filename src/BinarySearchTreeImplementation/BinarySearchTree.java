@@ -150,6 +150,9 @@ public class BinarySearchTree {
         return getNodeToDelete(deleteKey, startingRoot.right, startingRoot, "right");
     }
 
+    /**
+     * @return key of the smallest node in the binary search tree
+     */
     public int getMin() {
         if (root == null) {
             return 0;
@@ -165,6 +168,9 @@ public class BinarySearchTree {
         return minNode.key;
     }
 
+    /**
+     * @return key of the largest node in the binary search tree
+     */
     public int getMax() {
         if (root == null) {
             return 0;
@@ -180,6 +186,10 @@ public class BinarySearchTree {
         return maxNode.key;
     }
 
+    /**
+     * A depth-first search algorithm which prints the node keys in ascending order.
+     * @param node
+     */
     public void inOrderTraversal(Node node) {  // Always prints out an ordered (ascending order) list of node keys.
         if (node == null) {
             return;
@@ -189,6 +199,10 @@ public class BinarySearchTree {
         inOrderTraversal(node.right);
     }
 
+    /**
+     * A depth-first search algorithm which prints the root nodes before the left and right nodes.
+     * @param node
+     */
     public void preOrderTraversal(Node node) {
         if (node == null) {
             return;
@@ -198,6 +212,10 @@ public class BinarySearchTree {
         preOrderTraversal(node.right);
     }
 
+    /**
+     * A depth-first search algorithm which prints the root nodes after the left and right nodes.
+     * @param node
+     */
     public void postOrderTraversal(Node node) {
         if (node == null) {
             return;
@@ -205,6 +223,22 @@ public class BinarySearchTree {
         postOrderTraversal(node.left);
         postOrderTraversal(node.right);
         System.out.println(node.key);
+    }
+
+    /**
+     * @param node
+     * @return the largest node smaller than the inputted node
+     */
+    public Node getPredecessor(Node node) {
+        return null;
+    }
+
+    /**
+     * @param node
+     * @return the smallest node larger than the inputted node
+     */
+    public Node getSuccessor(Node node) {
+        return null;
     }
 
     public static void main(String[] args) {
