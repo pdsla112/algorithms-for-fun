@@ -180,13 +180,22 @@ public class BinarySearchTree {
         return maxNode.key;
     }
 
-    public void inOrderTraversal(Node node) {
+    public void inOrderTraversal(Node node) {  // Always prints out an ordered (ascending order) list of node keys.
         if (node == null) {
             return;
         }
         inOrderTraversal(node.left);
         System.out.println(node.key);
         inOrderTraversal(node.right);
+    }
+
+    public void preOrderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+        System.out.println(node.key);
+        preOrderTraversal(node.left);
+        preOrderTraversal(node.right);
     }
 
     public static void main(String[] args) {
@@ -202,6 +211,9 @@ public class BinarySearchTree {
         bst.add(77);
         bst.add(-12);
         System.out.println(bst);
+        System.out.println("This is the result of the inorder traversal:");
         bst.inOrderTraversal(bst.root);
+        System.out.println("This is the result of the pre-order traversal:");
+        bst.preOrderTraversal(bst.root);
     }
 }
