@@ -198,6 +198,15 @@ public class BinarySearchTree {
         preOrderTraversal(node.right);
     }
 
+    public void postOrderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+        postOrderTraversal(node.left);
+        postOrderTraversal(node.right);
+        System.out.println(node.key);
+    }
+
     public static void main(String[] args) {
         BinarySearchTree bst = new BinarySearchTree();
         bst.add(7);
@@ -215,5 +224,7 @@ public class BinarySearchTree {
         bst.inOrderTraversal(bst.root);
         System.out.println("This is the result of the pre-order traversal:");
         bst.preOrderTraversal(bst.root);
+        System.out.println("This is the result of the post-order traversal:");
+        bst.postOrderTraversal(bst.root);
     }
 }
